@@ -43,17 +43,18 @@ public class ArrayDemo {
                 System.out.println(i + " - " + j);
             }
         }
+        // куда надо поставить метку MyLabel для вывода этого сообщения:
         System.out.println("Программа завершена");
-        // куда надо поставить метку MyLabel для вывода всех значений i
-        // каким оператором можно заменить этот "костыль"
     }
 
-    static String doSome() {
-        if (true) {
-            return "";
-        }
-        return "23"; // почему эта реализация правильная?
-    }
+
+//    /* почему эта реализация if правильная? */
+//    static String doSome() {
+//        if (true) {
+//            return "";
+//        }
+//        return "23";
+//    }
 }
 
 class MyArr implements Iterable {
