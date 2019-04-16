@@ -1,53 +1,63 @@
 package task1;
 
 import java.util.Iterator;
-import java.util.Random;
 
 public class ArrayDemo {
     public static void main(String[] args) {
-        int[] arr = {2, 3, 5, 22, 34};
-        Integer[] arrB = new Integer[15];
 
-        Random rnd = new Random();
-        for (int i = 0; i < 5; i++) {
-            arrB[i] = rnd.nextInt(1000);
-        }
+//        int[] arr = {2, 3, 5, 22, 34};
+//        Integer[] arrB = new Integer[10];
+//
+//        for (int i : arr) {
+//            System.out.println("int " + i);
+//        }
+//
+//        Random rnd = new Random();
+//        for (int i = 0; i < 5; i++) {
+//            arrB[i] = rnd.nextInt(1000);
+//        }
+//
+//        for (Integer integer : arrB) {
+//            System.out.println("Integer " + integer);
+//        }
 
-        for (int i : arr) {
-            System.out.println(i);
-        }
 
-        for (Integer integer : arrB) {
-            System.out.println(integer);
-        }
+//        /* примитив в массиве */
+//        int arr1[] = new int[3];
+//        arr1[1] = 1;
+//        arr1[0] = 0;
+//        System.out.println(arr1[2]);
 
-        MyArr myArr = new MyArr();
-        for (Object o : myArr) {
 
-        }
+//        /* foreach реализуется через Iterable */
+//        MyArr myArr = new MyArr();
+//        for (Object o : myArr) {}
 
+        /* операторы прерывания */
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 if (j == 5) {
-                    //break MyLabel;
+//                    break MyLabel;
                     return;
                 }
                 System.out.println(i + " - " + j);
             }
-
         }
         System.out.println("Программа завершена");
+        // куда надо поставить метку MyLabel для вывода всех значений i
+        // каким оператором можно заменить этот "костыль"
     }
 
     static String doSome() {
         if (true) {
             return "";
         }
-        return "23";
+        return "23"; // почему эта реализация правильная?
     }
 }
 
 class MyArr implements Iterable {
+    int count = 0;
 
     @Override
     public Iterator iterator() {
@@ -55,7 +65,7 @@ class MyArr implements Iterable {
             @Override
             public boolean hasNext() {
                 System.out.println("hasNext");
-                return false;
+                return ++count != 3;
             }
 
             @Override
