@@ -2,6 +2,8 @@ package task1;
 
 import java.util.Iterator;
 
+/* Object[10][1000] || Object[1000][10] */
+
 public class ArrayDemo {
     public static void main(String[] args) {
 
@@ -29,32 +31,34 @@ public class ArrayDemo {
 //        System.out.println(arr1[2]);
 
 
-//        /* foreach реализуется через Iterable */
-//        MyArr myArr = new MyArr();
-//        for (Object o : myArr) {}
+        /* foreach реализуется через Iterable */
+        MyArr myArr = new MyArr();
+        for (Object o : myArr) {}
 
-        /* операторы прерывания */
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (j == 5) {
-//                    break MyLabel;
-                    return;
-                }
-                System.out.println(i + " - " + j);
-            }
-        }
-        // куда надо поставить метку MyLabel для вывода этого сообщения:
-        System.out.println("Программа завершена");
+//        /* операторы прерывания */
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j < 10; j++) {
+//                if (j == 5) {
+////                    break MyLabel;
+////                    return;
+//                    break;
+//                }
+//                System.out.println(i + " - " + j);
+//            }
+//            break;
+//        }
+//        // куда надо поставить метку MyLabel для вывода этого сообщения:
+//        System.out.println("Программа завершена");
     }
 
 
-//    /* почему эта реализация if правильная? */
-//    static String doSome() {
-//        if (true) {
-//            return "";
-//        }
-//        return "23";
-//    }
+    /* почему эта реализация if правильная? */
+    static String doSome() {
+        if (false) {
+            return "";
+        }
+        return "23";
+    }
 }
 
 class MyArr implements Iterable {
