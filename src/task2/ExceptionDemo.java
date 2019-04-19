@@ -3,55 +3,62 @@ package task2;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystemException;
+import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 
 public class ExceptionDemo {
-    public static void main(String[] args) throws IOException {
-        A a = new A(new C());
-        String s = null;
-        Exception exception = null;
+    static Exception exception;
+    static String result;
+
+    public static void main(String[] args) {
+        Wrapper w = new Wrapper(new C());
         try {
-            s = a.doSome();
-        } catch (SQLException e) {
+            result = w.doSome();
+        } catch (FileSystemException e) {
             exception = e;
-            s = "Arithmetic IO Error";
+            result = "IO Error";
         } catch (Exception e) {
             exception = e;
-            s = "Arithmetic Error";
+            result = "Some Exception";
         } finally {
             RuntimeException newEx = new RuntimeException();
             newEx.addSuppressed(exception);
-            //throw newEx;
-            System.out.println("finally block");
-        }
-        System.out.println(s);
+            newEx.addSuppressed(exception);
 
-        try (InputStream is = new FileInputStream("")) {
-            is.close();
+            throw newEx;
+//            System.out.println("finally block");
         }
+//        System.out.println(result);
+
+
+        /* Idea намекает нам что что закрывать ресурс самим не надо
+           если ресурс "упадет", а затем упадет close() - второе исклчение будет подавлено, но сохранится как Suppressed */
+//        try (InputStream is = new FileInputStream("")) {
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
 
-class A {
-    B b;
+class Wrapper {
+    private B b;
 
-    public A(B b) {
+    Wrapper(B b) {
         this.b = b;
     }
 
-    String doSome() throws SQLException {
-        try {
-            return b.doSomeElse().substring(2);
-        } catch (IOException e) {
-            System.out.println("exception handled");
-            throw new SQLException(e);
-        } finally {
-            return "Все хорошо";
-        }
-
+    String doSome() throws IOException {
+//        try {
+        return b.doSomeElse().substring(2);
+//        } catch (IOException e) {
+//            System.out.println("exception handled");
+//            throw new SQLException(e);
+//        } finally {
+//            return "Все хорошо";
+//        }
     }
-
-    ;
 }
 
 class B {
@@ -60,15 +67,18 @@ class B {
     }
 }
 
+/* сужение типа исключения при переопределении */
 class C extends B {
-    int d;
-
     @Override
-    String doSomeElse() throws IOException {
-        // что-то пошло не так
-        if (true) {
-            throw new IOException("ля-ля-ля");
-        }
-        return "C.doSomeElse";
+    String doSomeElse() throws NoSuchFileException {
+        // Предположим, что в этот метод нельзя заходить в текущей реализации проекта
+        throw new NoSuchFileException("Осмысленное сообщение о причине ошибки");
+    }
+}
+
+class D extends B{
+    @Override
+    String doSomeElse(){
+        return "it's OK";
     }
 }

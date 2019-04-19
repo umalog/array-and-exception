@@ -1,10 +1,15 @@
 package task3.test;
 
 public class Child extends Parent {
-    static String childString = "Значение дочерней статической переменной";
+    static String childStaticString;
+
+    static {
+        childStaticString = "Значение дочерней статической переменной";
+        System.out.println(childStaticString);
+    }
+    String childString = "нестатическая переменная";
 
     public Child() {
-        System.out.println();
-        System.out.println("А теперь конструктор дочернего класса. Он может работать со всеми значениями, потому что самый последний");
+        System.out.println("А теперь конструктор дочернего класса. Все поля уже инициализированны. например: " + childString);
     }
 }
